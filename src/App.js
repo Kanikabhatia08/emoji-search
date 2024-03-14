@@ -1,23 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import { ThemeProvider } from './context/Theme';
+import Header from './components/Header';
+import Emoji from './components/Emoji';
 
 function App() {
+
+  const getTheme = () => {
+    const theme = localStorage.getItem("theme");
+    if (!theme) {
+        // Default theme is taken as dark-theme
+        localStorage.setItem("theme", "dark");
+        return "dark";
+    } else {
+        return theme;
+    }
+  };
+
+const [themeMode, setThemeMode]= useState(getTheme)
+
+  const darkTheme = () =>{
+    setThemeMode('dark')
+  }
+
+  const lightTheme = () =>{
+    setThemeMode('light')
+  }
+
+  useEffect(()=>{
+    document.querySelector('html').classList.remove('dark',"light")
+    document.querySelector('html').classList.add(themeMode)
+  },[themeMode])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='h-screen py-10 mx-auto justify-center dark:bg-[#121212]'>
+      <ThemeProvider value={{themeMode, darkTheme, lightTheme}}>
+        <Header/>
+        <Emoji />
+      </ThemeProvider>
+      
     </div>
   );
 }
