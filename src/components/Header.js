@@ -9,15 +9,12 @@ function Header() {
 
     const {themeMode, lightTheme, darkTheme}  = useTheme();
     function toggleTheme() {
-        console.log(themeMode)
+        // console.log(themeMode)
         if (themeMode === "dark") {
             lightTheme()
-            localStorage.setItem("theme", "light");
         } 
         else {
-            darkTheme();
-            localStorage.setItem("theme", "dark");
-    
+            darkTheme();    
         }
     };
 

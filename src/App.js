@@ -7,24 +7,29 @@ import Emoji from './components/Emoji';
 function App() {
 
   const getTheme = () => {
-    const theme = localStorage.getItem("theme");
+    let theme = JSON.parse(localStorage.getItem("theme"));
     if (!theme) {
-        // Default theme is taken as dark-theme
-        localStorage.setItem("theme", "dark");
+        // Default theme is dark-theme
+        localStorage.setItem("theme", JSON.stringify('dark'));
         return "dark";
     } else {
         return theme;
     }
   };
 
-const [themeMode, setThemeMode]= useState(getTheme)
+const [themeMode, setThemeMode]= useState(getTheme())
+// const [themeMode, setThemeMode]= useState('light')
+
 
   const darkTheme = () =>{
     setThemeMode('dark')
+    localStorage.setItem("theme", JSON.stringify("dark"));
   }
 
   const lightTheme = () =>{
     setThemeMode('light')
+    localStorage.setItem("theme", JSON.stringify("light"));
+
   }
 
   useEffect(()=>{
