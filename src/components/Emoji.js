@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import emojiData from '../data.json'
+
 function Emoji() {
 
     const [loading, setLoading] = useState(false)
-    const [search, setSearch] = useState("")
     const [data, setData] = useState([])
 
+    //local storage
+    const searchItem = () =>{
+        if(searchKey){
+            return searchKey;
+        }
+        else{
+            return ""
+        }
+    }
+    const searchKey = JSON.parse(localStorage.getItem("search"));
+    const [search, setSearch] = useState(searchItem())
+    // console.log(search,"searchh")
+
     useEffect(()=>{
+        localStorage.setItem("search", JSON.stringify(search));
+        
         // console.log(emojiData)
         const newData = emojiData.filter((emoji) =>(
-            
-            emoji.title.toLowerCase().includes(search.toLocaleLowerCase())
-            
+            emoji.keywords.toLowerCase().includes(search.toLowerCase())
+            )
         )
-        )
-        setLoading(true)
-        setData(newData)
+
+        // console.log(searchKey)
+        setLoading(true);
+        setData(newData);
         // console.log(newData, "newdata")
-        console.log(loading)
-        console.log(data);
+        // console.log(loading)
+        // console.log(data);
 
     },[search])
+    
 
     return (
         <div className='text-center  mx-auto w-[60%]'>
@@ -33,25 +49,34 @@ function Emoji() {
             />
             
             {
-                loading ? 
-                (<div className='grid row-2'>
-                    {
-                        data.map((emoji) =>(
-                            <div className=' border-gray-500 border-2 rounded-md  dark:text-[#b3b3b3]' key={emoji.title}>
-                                <p>{emoji.symbol}</p>
-                                <h1>{emoji.title}</h1>
-                            </div>
-                        ))
+                search? 
+                <>
+                    {loading ? 
+                    (<div className='grid grid-cols-4 gap-3'>
+                        {
+                            
+                            data.map((emoji) =>(
+                                <div className='py-3 border-gray-500 border-2 rounded-md  dark:text-[#b3b3b3]' key={emoji.title}>
+                                    <p className='text-4xl my-4'>{emoji.symbol}</p>
+                                    <h1 className='text-sm dark:text-[#b3b3b3]'>{emoji.title}</h1>
+                                </div>
+                            ))
+
+                        }
                         
-                    }
-                    
-                </div>) : 
-                (
-                    <p>
-                        Type keywords to search!
-                    </p>
-                )
+                    </div>) : 
+                    (
+                        <p>
+                            Loading
+                        </p>
+                    )}
+                </>
+                :
+                <>
+                    <p className='text-sm dark:text-[#b3b3b3]'>Type Keywords to Search</p>
+                </>
             }
+            
         </div>
     )
 }

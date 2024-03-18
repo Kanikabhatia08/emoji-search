@@ -20,7 +20,6 @@ function App() {
 const [themeMode, setThemeMode]= useState(getTheme())
 // const [themeMode, setThemeMode]= useState('light')
 
-
   const darkTheme = () =>{
     setThemeMode('dark')
     localStorage.setItem("theme", JSON.stringify("dark"));
@@ -38,7 +37,7 @@ const [themeMode, setThemeMode]= useState(getTheme())
   },[themeMode])
 
   return (
-    <div className='h-screen py-10 mx-auto justify-center dark:bg-[#121212]'>
+    <div className='min-h-screen py-10 mx-auto justify-center dark:bg-[#121212]'>
       <ThemeProvider value={{themeMode, darkTheme, lightTheme}}>
         <Header/>
         <Emoji />

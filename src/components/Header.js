@@ -9,7 +9,8 @@ function Header() {
 
     const {themeMode, lightTheme, darkTheme}  = useTheme();
     function toggleTheme() {
-        // console.log(themeMode)
+        // console.log(themeMode,lightTheme)
+    
         if (themeMode === "dark") {
             lightTheme()
         } 
